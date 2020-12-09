@@ -19,3 +19,36 @@ Current supported media types are:
 ### Role management
 
 Let members of your Discord server manage their own roles.
+
+## Setting up
+
+To host your own version of this bot:
+
+```shell script
+# Clone the project
+git clone git@github.com:lucasvdh/discord-nodejs-bot.git
+cd discord-nodejs-bot
+# Install node modules
+npm install
+# Run the bot
+node bot.js
+```
+
+### Supervisord
+
+A reliable way to run your bot is via [supervisord](http://supervisord.org/).
+
+#### Example config file
+
+```shell script
+sudo nano /etc/supervisor/conf.d/discord-nodejs-bot.conf
+```
+
+```
+[program:discord-nodejs-bot]
+directory=/var/www/discord-nodejs-bot
+command=node bot.js
+autostart=true
+autorestart=true
+stderr_logfile=/var/log/discord-nodejs-bot.err.log
+```
