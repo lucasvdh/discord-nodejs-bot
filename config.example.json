@@ -1,0 +1,35 @@
+{
+  "token": "Get your discord bot token at https://discord.com/developers/applications/",
+  "roles": [
+    "among us",
+    "borderlands",
+    "call of duty",
+    "counter strike global offensive",
+    "cyberpunk",
+    "dark souls",
+    "destiny",
+    "fortnite",
+    "grand theft auto",
+    "league of legends",
+    "minecraft",
+    "no mans sky",
+    "overwatch",
+    "rocket league",
+    "sea of thieves",
+    "tabletop",
+    "trackmania",
+    "valorant",
+    "warzone"
+  ],
+  "abbreviations": {
+    "call of duty": ["cod"],
+    "counter strike global offensive": ["csgo"],
+    "dark souls": ["ds"],
+    "grand theft auto": ["gta"],
+    "league of legends": ["lol"],
+    "no mans sky": ["nms"],
+    "rocket league": ["rl"],
+    "sea of thieves": ["sot"],
+    "tabletop": ["tts"]
+  }
+}
