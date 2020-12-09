@@ -22,12 +22,32 @@ Let members of your Discord server manage their own roles.
 
 ## Setting up
 
-To host your own version of this bot:
-
 ```shell script
 # Clone the project
 git clone git@github.com:lucasvdh/discord-nodejs-bot.git
 cd discord-nodejs-bot
+```
+
+To host your own version of this bot you first need a Discord application.
+
+### Discord application setup
+
+You can create a Discord application at https://discord.com/developers/applications/.
+
+Once you've got an application you need to setup the bot for that application. 
+You can do that here https://discord.com/developers/applications/{replace_with_your_application_id}/bot
+
+On the same page, copy your bot token and paste it in the `config.json` file.
+
+### Adding the bot to your server
+Adding the bot you just created to a server is done via OAuth.
+
+You can do this via the following link:
+https://discord.com/api/oauth2/authorize?client_id={replace_with_your_client_id}&permissions=8&scope=bot
+
+### Running the bot
+
+```shell script
 # Install node modules
 npm install
 # Run the bot
