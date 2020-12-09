@@ -1,5 +1,8 @@
 {
   "token": "Get your discord bot token at https://discord.com/developers/applications/",
+  "facebook_link_enabled": true,
+  "instagram_link_enabled": true,
+  "roles_enabled": true,
   "roles": [
     "among us",
     "borderlands",

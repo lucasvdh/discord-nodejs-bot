@@ -40,75 +40,81 @@ client.on("message", async message => {
     // and not get into a spam loop (we call that "botception").
     if (message.author.bot) return;
 
-    let instagramURLMatches = message.content.match(/(http[s]?:\/\/(?:www.)?instagram\.com\/p\/\w{11}\/)/);
+    if (config.instagram_link_enabled) {
+        let instagramURLMatches = message.content.match(/(http[s]?:\/\/(?:www.)?instagram\.com\/p\/\w{11}\/)/);
 
-    if (instagramURLMatches !== null) {
-        console.log(instagramURLMatches[0]);
-        instagramPostData(instagramURLMatches[0]).then(post => {
-            if (post.file === 'video') {
-                message.channel.send(post.title, {
-                    files: [
-                        post.link.video
-                    ]
-                });
-            } else if (post.file === 'instapp:photo') {
-                message.channel.send(post.title, {
-                    files: [
-                        post.link.image,
-                        // 'http://ipv4.download.thinkbroadband.com/50MB.zip'
-                    ]
-                });
-            }
-        });
-    }
-
-    let facebookURLMatches = message.content.match(/(http[s]?:\/\/(?:www.)?facebook\.(?:com|nl)\/.+)/);
-
-    if (facebookURLMatches !== null) {
-        facebookPostData(facebookURLMatches[0]).then(videoUrl => {
-            message.channel.send('Found the video', {
-                files: [
-                    videoUrl
-                ]
+        if (instagramURLMatches !== null) {
+            console.log(instagramURLMatches[0]);
+            instagramPostData(instagramURLMatches[0]).then(post => {
+                if (post.file === 'video') {
+                    message.channel.send(post.title, {
+                        files: [
+                            post.link.video
+                        ]
+                    });
+                } else if (post.file === 'instapp:photo') {
+                    message.channel.send(post.title, {
+                        files: [
+                            post.link.image,
+                            // 'http://ipv4.download.thinkbroadband.com/50MB.zip'
+                        ]
+                    });
+                }
             });
-        }).catch(error => {
-            console.log(error);
-        });
+        }
     }
 
-    let roleMatch = message.content.match(/^-role (.+)$/);
+    if (config.facebook_link_enabled) {
+        let facebookURLMatches = message.content.match(/(http[s]?:\/\/(?:www.)?facebook\.(?:com|nl)\/.+)/);
 
-    if (/^-role/.test(message.content) && roleMatch !== null && /role-assignment/.test(message.channel.name)) {
-        let role = message.guild.roles.cache.find(r => r.name === roleMatch[1])
-
-        if (typeof role !== "undefined") {
-            if (message.member.roles.cache.has(role.id)) {
-                message.member.roles.remove(role).then(() => {
-                    message.channel.send('Took away your role!')
+        if (facebookURLMatches !== null) {
+            facebookPostData(facebookURLMatches[0]).then(videoUrl => {
+                message.channel.send('Found the video', {
+                    files: [
+                        videoUrl
+                    ]
                 });
-            } else {
-                message.member.roles.add(role).then(() => {
-                    message.channel.send('Gave you the role!');
-                });
-            }
-        } else {
-            message.channel.send('Role not found');
+            }).catch(error => {
+                console.log(error);
+            });
         }
-    } else if (/^-role$/.test(message.content) && /role-assignment/.test(message.channel.name)) {
-        let rolesOverview = "Here is a list of available roles:\n```"
+    }
 
-        config.roles.sort().forEach(role => {
-            if (typeof config.abbreviations[role] !== "undefined") {
-                config.abbreviations[role].forEach(abbreviation => {
-                    rolesOverview += abbreviation + '/ '
-                })
+    if (config.roles_enabled) {
+        let roleMatch = message.content.match(/^-role (.+)$/);
+
+        if (/^-role/.test(message.content) && roleMatch !== null && /role-assignment/.test(message.channel.name)) {
+            let role = message.guild.roles.cache.find(r => r.name === roleMatch[1])
+
+            if (typeof role !== "undefined") {
+                if (message.member.roles.cache.has(role.id)) {
+                    message.member.roles.remove(role).then(() => {
+                        message.channel.send('Took away your role!')
+                    });
+                } else {
+                    message.member.roles.add(role).then(() => {
+                        message.channel.send('Gave you the role!');
+                    });
+                }
+            } else {
+                message.channel.send('Role not found');
             }
-            rolesOverview += role + '\n';
-        });
+        } else if (/^-role$/.test(message.content) && /role-assignment/.test(message.channel.name)) {
+            let rolesOverview = "Here is a list of available roles:\n```"
 
-        rolesOverview += '```';
+            config.roles.sort().forEach(role => {
+                if (typeof config.abbreviations[role] !== "undefined") {
+                    config.abbreviations[role].forEach(abbreviation => {
+                        rolesOverview += abbreviation + '/ '
+                    })
+                }
+                rolesOverview += role + '\n';
+            });
 
-        message.channel.send(rolesOverview);
+            rolesOverview += '```';
+
+            message.channel.send(rolesOverview);
+        }
     }
 
     // // Also good practice to ignore any message that does not start with our prefix,
