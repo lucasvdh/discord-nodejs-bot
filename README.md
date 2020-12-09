@@ -9,12 +9,12 @@ Those days are no more!
 
 If someone posts a link and this bot can find the corresponding image or video for it, it will send it as a file to the channel the link was posted in. 
 
+<img src="./examples/facebook link example.gif" style="max-width: 500px;"/>
+
 Current supported media types are:
+- Facebook videos
 - Instagram images
 - Instagram videos
-- Facebook videos
-
-<img src="./examples/facebook link example.gif"/>
 
 ### Role management
 
