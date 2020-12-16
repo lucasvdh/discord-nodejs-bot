@@ -51,14 +51,25 @@ client.on("message", async message => {
                         files: [
                             post.link.video
                         ]
-                    });
+                    }).catch(error => {
+                        if (typeof error.httpStatus !== "undefined" && error.httpStatus === 413) {
+                            message.channel.send('Found the video but it\'s too large to post :man_shrugging: but here\'s the direct link anyway:\n' + post.link.video);
+                        } else {
+                            message.channel.send('Something went wrong sending the file :man_shrugging: but here\'s the direct link anyway:\n' + post.link.video);
+                        }
+                    });;
                 } else if (post.file === 'instapp:photo') {
                     message.channel.send(post.title, {
                         files: [
                             post.link.image,
-                            // 'http://ipv4.download.thinkbroadband.com/50MB.zip'
                         ]
-                    });
+                    }).catch(error => {
+                        if (typeof error.httpStatus !== "undefined" && error.httpStatus === 413) {
+                            message.channel.send('Found the video but it\'s too large to post :man_shrugging: but here\'s the direct link anyway:\n' + post.link.image);
+                        } else {
+                            message.channel.send('Something went wrong sending the file :man_shrugging: but here\'s the direct link anyway:\n' + post.link.image);
+                        }
+                    });;
                 }
             });
         }
@@ -73,9 +84,24 @@ client.on("message", async message => {
                     files: [
                         videoUrl
                     ]
+                }).catch(error => {
+                    if (typeof error.httpStatus !== "undefined" && error.httpStatus === 413) {
+                        message.channel.send('Found the video but it\'s too large to post :man_shrugging: but here\'s the direct link anyway:\n' + videoUrl);
+                    } else {
+                        message.channel.send('Something went wrong sending the file :man_shrugging: but here\'s the direct link anyway:\n' + videoUrl);
+                    }
                 });
             }).catch(error => {
-                console.log(error);
+                if (error === 'post_not_found') {
+                    message.channel.send('Couldn\'t the find video, is there a more direct to the post?');
+                }
+                if (error === 'invalid_url') {
+                    console.log('Not a valid url', facebookURLMatches[0]);
+                }
+                if (error === 'video_not_found') {
+                    message.channel.send('Couldn\'t the find video.');
+                }
+                console.log('facebookPostData', error);
             });
         }
     }
