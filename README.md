@@ -1,6 +1,8 @@
 # Discord NodeJS Bot
 
-A NodeJS Discord bot that can do some stuff to make your life easier.
+A NodeJS Discord bot that can do some stuff to make your life easier. 
+
+To contribute, report bugs or links that aren't working, join the discord server: [https://discord.gg/AqVErbZRu7](https://discord.gg/AqVErbZRu7).
 
 ### Link loading
 
